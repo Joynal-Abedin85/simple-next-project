@@ -1,17 +1,35 @@
-export default function Navbar() {
+"use client";
 
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+// import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import Link from "next/link";
 
-    const handleLogin = () => {
-      // Add your login logic here
-      setIsAuthenticated(true);
-    };
+
+// export async function getServerSideProps() {
+//     const { getUser } = getKindeServerSession();
   
-    const handleLogout = () => {
-      // Add your logout logic here
-      setIsAuthenticated(false);
-    };
-    
+//     // Fetch user data server-side
+//      // Get user data
+//   let user = null;
+//   try {
+//     user = await getUser(); // This will run server-side
+//   } catch (error) {
+//     console.error("Failed to fetch user:", error);
+//   }
+  
+//     return {
+//       props: { user }, // Pass user data to the component as a prop
+//     };
+//   }
+
+export default    function Navbar({user}){
+
+console.log(user)
+
+    // const {getUser} = getKindeServerSession()
+
+    // const user = await getUser()
+    // console.log(user)
+
     return (
         <nav className="bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -37,22 +55,22 @@ export default function Navbar() {
   
             {/* Authentication Button */}
             <div>
-              {isAuthenticated ? (
-                <button
-                  onClick={handleLogout}
-                  className="text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-sm font-medium"
-                >
-                  Logout
-                </button>
-              ) : (
-                <button
-                  onClick={handleLogin}
-                  className="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium"
-                >
-                  Login
-                </button>
-              )}
-            </div>
+            {user ? (
+              <Link
+                href="/api/auth/logout"
+                className="text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-sm font-medium"
+              >
+                Logout
+              </Link>
+            ) : (
+              <Link
+                href="/api/auth/login"
+                className="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium"
+              >
+                Login
+              </Link>
+            )}
+          </div>
           </div>
         </div>
       </nav>
